@@ -6,7 +6,7 @@ package main
 // updates the lists of proposers and acceptors.
 type ActorRegistry struct {
 	proposer  *Proposer
-	acceptors  []*Acceptor
+	acceptors []*Acceptor
 }
 
 var GlobalActorRegistry *ActorRegistry
@@ -19,8 +19,8 @@ func NewActorRegistry(numAcceptors int) {
 		acceptors[i] = NewAcceptor(uint64(i))
 	}
 
-	GlobalActorRegistry =  &ActorRegistry{
-		proposer: NewProposer(),
+	GlobalActorRegistry = &ActorRegistry{
+		proposer:  NewProposer(),
 		acceptors: acceptors,
 	}
 }

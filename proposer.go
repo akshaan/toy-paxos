@@ -13,7 +13,7 @@ import (
 // to acceptors and determines whether there is consensus
 // on the new value among a majority of acceptors
 type Proposer struct {
-	id uint64
+	id             uint64
 	messageChannel chan Message
 	valueToPropose string
 }
@@ -21,7 +21,7 @@ type Proposer struct {
 // NewProposer creates a new proposer
 func NewProposer() *Proposer {
 	return &Proposer{
-		id: 0,
+		id:             0,
 		messageChannel: make(chan Message),
 		valueToPropose: generateNewProposal(),
 	}
@@ -30,12 +30,12 @@ func NewProposer() *Proposer {
 // generateNewProposal generates a random Enoji to be used
 // as a new proposal value
 func generateNewProposal() string {
-	 low := 0x1F601
-	 high := 0x1F64F
-	 rand.Seed(time.Now().UnixNano())
-	 randomEmojiInt := rand.Intn(high - low + 1) + low
-	 randomEmojiStr := html.UnescapeString("&#" + strconv.Itoa(randomEmojiInt) + ";")
-	 return randomEmojiStr
+	low := 0x1F601
+	high := 0x1F64F
+	rand.Seed(time.Now().UnixNano())
+	randomEmojiInt := rand.Intn(high-low+1) + low
+	randomEmojiStr := html.UnescapeString("&#" + strconv.Itoa(randomEmojiInt) + ";")
+	return randomEmojiStr
 
 }
 
@@ -53,14 +53,14 @@ func (p *Proposer) sendMessageToAcceptors(message Message) {
 }
 
 // didReceiveNonFailureFromMajority checks if the number of non-failure
-// messages is greater than than 1/2 the number of acceptors. 
+// messages is greater than than 1/2 the number of acceptors.
 func didReceiveNonFailureFromMajority(numNonFailures int) bool {
 	numAcceptors := GlobalActorRegistry.getNumAcceptors()
 	return numNonFailures > (numAcceptors / 2)
 }
 
 // fetchValueFromPromisesIfExists fetches a value from a promise message
-// if it is present. Note that if the value is an empty string, it is 
+// if it is present. Note that if the value is an empty string, it is
 // considered to be absent. At the moment all proposals are Emoji
 // but any string barring the empty string is considered to be a valid
 // value.
@@ -85,13 +85,13 @@ func (p *Proposer) processPromiseOrFailMessages() error {
 	for i := 0; i < GlobalActorRegistry.getNumAcceptors(); i++ {
 		promiseOrFailMessage := <-p.messageChannel
 		switch promiseOrFailMessage.messageType {
-			case PROMISE:
-				log.Printf("Proposer received promise %+v", promiseOrFailMessage)
-				promiseMessages = append(promiseMessages, promiseOrFailMessage)
-			case FAIL:
-				log.Printf("Proposer received fail %+v", promiseOrFailMessage)
-			default:
-				log.Panicf("Expected PROMISE or FAIL message but got %+v", promiseOrFailMessage)
+		case PROMISE:
+			log.Printf("Proposer received promise %+v", promiseOrFailMessage)
+			promiseMessages = append(promiseMessages, promiseOrFailMessage)
+		case FAIL:
+			log.Printf("Proposer received fail %+v", promiseOrFailMessage)
+		default:
+			log.Panicf("Expected PROMISE or FAIL message but got %+v", promiseOrFailMessage)
 		}
 	}
 
@@ -101,8 +101,8 @@ func (p *Proposer) processPromiseOrFailMessages() error {
 			valueToPropose = acceptedValue
 		}
 		proposeMessage := Message{
-			id: p.id,
-			value: valueToPropose,
+			id:          p.id,
+			value:       valueToPropose,
 			messageType: PROPOSE,
 		}
 		p.sendMessageToAcceptors(proposeMessage)
@@ -125,13 +125,13 @@ func (p *Proposer) processAcceptMessages() {
 	for i := 0; i < GlobalActorRegistry.getNumAcceptors(); i++ {
 		acceptMessage := <-p.messageChannel
 		switch acceptMessage.messageType {
-			case ACCEPT:
-				log.Printf("Proposer received accept %+v", acceptMessages)
-				acceptMessages = append(acceptMessages, acceptMessage)
-			case FAIL:
-				log.Printf("Proposer received failure to accept %+v", acceptMessages)
-			default:
-				log.Panicf("Expected ACCEPT or FAIL message but got")
+		case ACCEPT:
+			log.Printf("Proposer received accept %+v", acceptMessages)
+			acceptMessages = append(acceptMessages, acceptMessage)
+		case FAIL:
+			log.Printf("Proposer received failure to accept %+v", acceptMessages)
+		default:
+			log.Panicf("Expected ACCEPT or FAIL message but got")
 		}
 	}
 
@@ -150,7 +150,7 @@ func (p *Proposer) runPaxos() {
 	log.Printf("Starting Paxos....")
 	log.Printf("Generated new proposal: %s", p.valueToPropose)
 	prepareMessage := Message{
-		id: p.id,
+		id:          p.id,
 		messageType: PREPARE,
 	}
 	p.sendMessageToAcceptors(prepareMessage)
