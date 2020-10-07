@@ -1,5 +1,5 @@
 # Toy Paxos
-A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos-simple.pdf) protcol in Golang.
+A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos-simple.pdf) protocol in Golang.
 
 ## Getting started
 - Install Go according to the instructions [here](https://www.google.com/search?q=install+golang&rlz=1C5CHFA_enUS847US847&oq=install+golang&aqs=chrome..69i57j0l7.3102j0j7&sourceid=chrome&ie=UTF-8)
@@ -14,7 +14,7 @@ A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos
 ├── `acceptor.go` : Implementation of an Acceptor service
 ├── `actor.go` : Interface that both Acceptors and Proposers conform to
 ├── `actor_registry.go` : A registry that lists the Proposers and all Acceptors in the current Paxos run
-├── `message.go` : Message struct that is exchaged between the Proposer and Acceptors
+├── `message.go` : Message struct that is exchanged between the Proposer and Acceptors
 ├── `main.go` : The top level file that runs rounds of Paxos in an infinite loop
 └── `proposer.go` : Implementation of an Acceptor service
 ```
