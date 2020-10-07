@@ -28,8 +28,8 @@ func NewAcceptor(address uint64) *Acceptor {
 	}
 }
 
-// sendMessage sends a new message to the acceptor a
-func (a *Acceptor) sendMessage(message Message) {
+// SendMessage sends a new message to the acceptor a
+func (a *Acceptor) SendMessage(message Message) {
 	a.messageChannel <- message
 }
 
@@ -45,11 +45,11 @@ func (a *Acceptor) processPrepareMessage(prepareMessage Message) {
 		failMessage := Message{
 			messageType: FAIL,
 		}
-		proposer.sendMessage(failMessage)
+		proposer.SendMessage(failMessage)
 	} else {
 		a.maxId = prepareMessage.id
 		if a.proposalAccepted {
-			proposer.sendMessage(
+			proposer.SendMessage(
 				Message{
 					id:          a.maxId,
 					value:       a.acceptedValue,
@@ -58,7 +58,7 @@ func (a *Acceptor) processPrepareMessage(prepareMessage Message) {
 				},
 			)
 		} else {
-			proposer.sendMessage(
+			proposer.SendMessage(
 				Message{
 					id:          a.maxId,
 					messageType: PROMISE,
@@ -91,7 +91,7 @@ func (a *Acceptor) processProposeMessage(proposeMessage Message) {
 		// consensus (e.g. updating a database). In this implementation,
 		// we omit the learner and simply return the acceptance to the
 		// proposer
-		proposer.sendMessage(
+		proposer.SendMessage(
 			Message{
 				id:          a.maxId,
 				messageType: ACCEPT,
@@ -105,7 +105,7 @@ func (a *Acceptor) processProposeMessage(proposeMessage Message) {
 			proposeMessage.value,
 			proposeMessage.id,
 		)
-		proposer.sendMessage(
+		proposer.SendMessage(
 			Message{
 				messageType: FAIL,
 			},
