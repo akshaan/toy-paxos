@@ -6,25 +6,25 @@ import (
 )
 
 // Acceptor represents an acceptor in the Paxos context.
-// Acceptors accept values proposed by the 
-// proposer or reject them (in the case of a failure, 
+// Acceptors accept values proposed by the
+// proposer or reject them (in the case of a failure,
 // for instance)
 type Acceptor struct {
-	maxId uint64
-	messageChannel chan Message
+	maxId            uint64
+	messageChannel   chan Message
 	proposalAccepted bool
-	acceptedId uint64
-	acceptedValue string
-	address uint64
+	acceptedId       uint64
+	acceptedValue    string
+	address          uint64
 }
 
 // NewAcceptor creates a new acceptor
 func NewAcceptor(address uint64) *Acceptor {
 	return &Acceptor{
-		maxId: 0,
-		messageChannel: make(chan Message),
+		maxId:            0,
+		messageChannel:   make(chan Message),
 		proposalAccepted: false,
-		address: address,
+		address:          address,
 	}
 }
 
@@ -51,16 +51,16 @@ func (a *Acceptor) processPrepareMessage(prepareMessage Message) {
 		if a.proposalAccepted {
 			proposer.sendMessage(
 				Message{
-					id: a.maxId,
-					value: a.acceptedValue,
-					acceptedId: a.acceptedId,
+					id:          a.maxId,
+					value:       a.acceptedValue,
+					acceptedId:  a.acceptedId,
 					messageType: PROMISE,
 				},
 			)
 		} else {
 			proposer.sendMessage(
 				Message{
-					id: a.maxId,
+					id:          a.maxId,
 					messageType: PROMISE,
 				},
 			)
@@ -89,13 +89,13 @@ func (a *Acceptor) processProposeMessage(proposeMessage Message) {
 		// to additional services calles Learners in the original Paxos
 		// paper. These learners might perform an operation that requires
 		// consensus (e.g. updating a database). In this implementation,
-		// we omit the learner and simply return the acceptance to the 
+		// we omit the learner and simply return the acceptance to the
 		// proposer
 		proposer.sendMessage(
 			Message{
-				id: a.maxId,
+				id:          a.maxId,
 				messageType: ACCEPT,
-				value: proposeMessage.value,
+				value:       proposeMessage.value,
 			},
 		)
 	} else {

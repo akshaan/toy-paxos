@@ -10,7 +10,7 @@ const (
 	// a new ID for the current paxos round
 	PREPARE MessageType = iota
 
-	// PROMISE is sent from acceptor --> proposer to accept 
+	// PROMISE is sent from acceptor --> proposer to accept
 	// a new ID from the proposer
 	PROMISE MessageType = iota
 
@@ -31,15 +31,14 @@ const (
 	TERMINATE MessageType = iota
 )
 
-
-// Message represents the various messages exchanged 
+// Message represents the various messages exchanged
 // among actors in the Paxos context.
 // In a real production scenario, these would likely be
 // RPC request objects with an externally defined schema
 // (e.g. Thrift, GRPC).
 type Message struct {
-	id uint64
-	value string
+	id          uint64
+	value       string
 	messageType MessageType
-	acceptedId uint64
+	acceptedId  uint64
 }
