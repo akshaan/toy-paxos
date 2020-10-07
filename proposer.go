@@ -39,8 +39,8 @@ func generateNewProposal() string {
 
 }
 
-// sendMessage sends a message to this proposer
-func (p *Proposer) sendMessage(message Message) {
+// SendMessage sends a message to this proposer
+func (p *Proposer) SendMessage(message Message) {
 	p.messageChannel <- message
 }
 
@@ -48,7 +48,7 @@ func (p *Proposer) sendMessage(message Message) {
 func (p *Proposer) sendMessageToAcceptors(message Message) {
 	acceptors := GlobalActorRegistry.getAcceptors()
 	for _, acceptor := range acceptors {
-		acceptor.sendMessage(message)
+		acceptor.SendMessage(message)
 	}
 }
 
