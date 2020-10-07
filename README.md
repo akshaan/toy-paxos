@@ -4,7 +4,10 @@ A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos
 ## Getting started
 - Install Go according to the instructions [here](https://www.google.com/search?q=install+golang&rlz=1C5CHFA_enUS847US847&oq=install+golang&aqs=chrome..69i57j0l7.3102j0j7&sourceid=chrome&ie=UTF-8)
 - Run `go build` to build the compiled binary. The binary will be written to `./paxos`.
-- Run the compiled binary using `./paxos --num-acceptors <number-of-acceptors> --acceptor-failure-prob <probability-of-failure>`
+- Run the compiled binary using 
+```
+./paxos --num-acceptors <number-of-acceptors> --acceptor-failure-prob <probability-of-failure>
+```
 - Running the binary will keep running new Paxos rounds with new proposals. Use Ctrl-C to terminate.
 
 ## Files
@@ -24,7 +27,7 @@ A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos
 - The proposer does not fail
 - We assume that message IDs from the proposer start at 1
 - We assume that an empty string is not a valid value in each message. Currently all generated proposals are Emojis but any string 
-  barring the empty string is a valid value 😬.
+  barring the empty string is a valid value 😬
 
 ## Potential features/improvements
 - Tests, tests, tests
