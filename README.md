@@ -8,6 +8,7 @@ A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos
 - Running the binary will keep running new Paxos rounds with new proposals. Use Ctrl-C to terminate.
 
 ## Files
+```
 .
 ├── `README.md` : this file
 ├── `acceptor.go` : Implementation of an Acceptor service
@@ -16,6 +17,7 @@ A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos
 ├── `message.go` : Message struct that is exchaged between the Proposer and Acceptors
 ├── `main.go` : The top level file that runs rounds of Paxos in an infinite loop
 └── `proposer.go` : Implementation of an Acceptor service
+```
 
 ## Assumptions
 - We assume there is only a single proposer at the moment
