@@ -5,7 +5,9 @@ A toy implementation of the [Paxos](https://lamport.azurewebsites.net/pubs/paxos
 - Install Go according to the instructions [here](https://www.google.com/search?q=install+golang&rlz=1C5CHFA_enUS847US847&oq=install+golang&aqs=chrome..69i57j0l7.3102j0j7&sourceid=chrome&ie=UTF-8)
 - Run `go build` to build the compiled binary. The binary will be written to `./paxos`.
 - Run the compiled binary using `./paxos --num-acceptors <number-of-acceptors> --acceptor-failure-prob <probability-of-failure>`
-- Running the binary will keep running new Paxos rounds with new proposals. Use Ctrl-C to terminate.
+- Running the binary will keep running new Paxos rounds with new proposals 
+- Logs to stderr will show each step in the protocol being executed for each round
+- Use Ctrl-C to terminate
 
 ## Files
 ```
